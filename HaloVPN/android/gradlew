@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Lightweight wrapper to call the system Gradle when a wrapper is not present.
+BASEDIR=$(cd "$(dirname "$0")" && pwd)
+GRADLE_BIN=${GRADLE_BIN:-gradle}
+
+if ! command -v "$GRADLE_BIN" >/dev/null 2>&1; then
+  echo "Gradle executable not found in PATH. Please install Gradle or ensure it is available in CI." >&2
+  exit 1
+fi
+
+exec "$GRADLE_BIN" "$@"
